@@ -1,0 +1,22 @@
+{
+  "Base component": {
+    "scope": "typescriptreact",
+    "prefix": "bsc",
+    "body": [
+      "import {useState} from 'react'",
+      "",
+      "let counter = 0",
+      "",
+      "interface ${1:name}Props{}",
+      "",
+      "export const ${1:name} = ({}: ${1:name}Props) => {",
+      "\tconsole.log('${1:name} counter', ++counter)",
+      "",
+      "\tconst [state, setState] = useState()",
+      "",
+      "\treturn <></>",
+      "}"
+    ],
+    "description": "Create a base react component"
+  }
+}
