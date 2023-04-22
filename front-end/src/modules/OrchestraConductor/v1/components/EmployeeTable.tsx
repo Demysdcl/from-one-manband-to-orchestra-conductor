@@ -5,7 +5,7 @@ let counter = 0
 
 interface EmployeeTableProps {
   filteredList: Employee[]
-  handleConfirmation: (employee) => void
+  handleConfirmation: (employee: Employee) => void
   handleEdit: (employee: Employee) => void
 }
 

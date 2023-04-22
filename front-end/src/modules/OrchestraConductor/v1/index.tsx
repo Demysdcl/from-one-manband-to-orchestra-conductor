@@ -88,12 +88,12 @@ export const OrchestraConductorV1 = () => {
     findCities()
   }, [])
 
-  const handleEdit = (person: Employee) => {
-    setSelectedId(person.id)
-    setName(person.name)
-    setCityField(person.city)
-    setJobField(person.job)
-    setBirthday(format(parseISO(person.birthday), 'yyyy-MM-dd'))
+  const handleEdit = (employee: Employee) => {
+    setSelectedId(employee.id)
+    setName(employee.name)
+    setCityField(employee.city)
+    setJobField(employee.job)
+    setBirthday(format(parseISO(employee.birthday), 'yyyy-MM-dd'))
     handleOpenForm()
   }
 
@@ -151,6 +151,7 @@ export const OrchestraConductorV1 = () => {
 
   const handleConfirmation = (employee?: Employee) => {
     setSelectedId(employee?.id)
+    setName(employee?.name ?? '')
     setOpenConfirmationModal(!openConfirmationModal)
   }
 

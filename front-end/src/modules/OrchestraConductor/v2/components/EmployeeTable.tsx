@@ -1,34 +1,20 @@
 import { Employee } from '@/modules/Shared/service/employeeService'
 import { parseISO } from 'date-fns'
-import { Dispatch, SetStateAction, useState } from 'react'
 
 let counter = 0
 
 interface EmployeeTableProps {
   filteredList: Employee[]
-  setSelectedEmployee: Dispatch<SetStateAction<Employee | undefined>>
-  handleOpenForm: () => void
+  handleConfirmation: (employee: Employee) => void
+  handleEdit: (employee: Employee) => void
 }
 
 export const EmployeeTable = ({
   filteredList,
-  setSelectedEmployee,
-
-  handleOpenForm,
+  handleConfirmation,
+  handleEdit,
 }: EmployeeTableProps) => {
   console.log('EmployeeTable counter', ++counter)
-
-  const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
-
-  const handleEdit = (employee: Employee) => {
-    setSelectedEmployee(employee)
-    handleOpenForm()
-  }
-
-  const handleConfirmation = (employee?: Employee) => {
-    setSelectedEmployee(employee)
-    setOpenConfirmationModal((value) => !value)
-  }
 
   return (
     <>

@@ -1,14 +1,9 @@
 import {
   Employee,
-  addEmployee,
-  deleteEmployee,
-  getCities,
   getEmployees,
-  getJobs,
-  updateEmployee,
 } from '@/modules/Shared/service/employeeService'
-import { format, parse, parseISO } from 'date-fns'
-import { FormEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { FilterType } from './Shared'
 import { AddEmployeeAction } from './components/AddEmployeeAction'
 import { DeleteConfirmationModal } from './components/DeleteConfirmationModal'
 import { EmployForm } from './components/EmployeeForm'
@@ -21,50 +16,29 @@ let counter = 0
 export const OrchestraConductorV2 = () => {
   console.log('OrchestraConductorV2 counter', ++counter)
 
-  const [employeeloading, setEmployeeLoading] = useState(false)
-  const [jobsloading, setJobsLoading] = useState(false)
-  const [citiesloading, setCitiesLoading] = useState(false)
-
   const [employees, setEmployees] = useState<Employee[]>([])
   const [filteredList, setFilteredList] = useState<Employee[]>([])
 
-  const [cities, setCities] = useState<string[]>([])
-  const [jobs, setJobs] = useState<string[]>([])
-  const [query, setQuery] = useState('')
-  const [city, setCity] = useState('')
-  const [job, setJob] = useState('')
-
   const [openFormModal, setOpenFormModal] = useState(false)
-  const [name, setName] = useState('')
-  const [cityField, setCityField] = useState('')
-  const [jobField, setJobField] = useState('')
-  const [birthday, setBirthday] = useState('')
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee>()
 
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
-  const [selectedId, setSelectedId] = useState<string>()
 
-  const showLoading = employeeloading || citiesloading || jobsloading
+  const [employeeloading, setEmployeeLoading] = useState(false)
+  const [filterLoading, setFilterLoading] = useState(false)
+  const [formLoading, setFormLoading] = useState(false)
+
+  const showLoading = employeeloading || filterLoading || formLoading
 
   const findEmployees = async () => {
     setEmployeeLoading(true)
     const response = await getEmployees()
     setEmployees(response)
+    setFilteredList(response)
     setEmployeeLoading(false)
   }
 
-  const findJobs = async () => {
-    setJobsLoading(true)
-    setJobs(await getJobs())
-    setJobsLoading(false)
-  }
-
-  const findCities = async () => {
-    setCitiesLoading(true)
-    setCities(await getCities())
-    setCitiesLoading(false)
-  }
-
-  const handleFilter = () => {
+  const handleFilter = ({ query, city, job }: FilterType) => {
     setFilteredList(
       employees.filter((item) => {
         const isNameMatched = item.name
@@ -78,90 +52,46 @@ export const OrchestraConductorV2 = () => {
     )
   }
 
-  useEffect(() => {
-    handleFilter()
-  }, [employees])
+  const findEmployeeIndexById = (employee: Employee) =>
+    employees.findIndex(({ id }) => id === employee.id)
 
-  useEffect(() => {
-    findEmployees()
-    findJobs()
-    findCities()
-  }, [])
-
-  const handleEdit = (index: number, person: Employee) => {
-    setSelectedId(person.id)
-    setName(person.name)
-    setCityField(person.city)
-    setJobField(person.job)
-    setBirthday(format(parseISO(person.birthday), 'yyyy-MM-dd'))
-    handleOpenForm()
-  }
-
-  const handleClearFields = () => {
-    setSelectedId('')
-    setName('')
-    setCityField('')
-    setJobField('')
-    setBirthday('')
-    handleOpenForm()
-  }
-
-  const save = async () => {
-    await addEmployee({
-      name,
-      city: cityField,
-      job: jobField,
-      birthday: parse(birthday, 'yyyy-MM-dd', new Date()).toISOString(),
-    })
-    await findEmployees()
-    await findCities()
-    handleClearFields()
-  }
-
-  const edit = async () => {
-    await updateEmployee(selectedId!, {
-      name,
-      city: cityField,
-      job: jobField,
-      birthday: parse(birthday, 'yyyy-MM-dd', new Date()).toISOString(),
-    })
-
-    await findEmployees()
-    await findCities()
-    handleClearFields()
-  }
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault()
-    try {
-      setEmployeeLoading(true)
-      if (selectedId) edit()
-      else save()
-    } catch (error) {
-      console.error(error)
-    } finally {
-      handleClearFields()
-      setEmployeeLoading(false)
+  const handleFormUpdate = (employee: Employee) => {
+    const indexOf = findEmployeeIndexById(employee)
+    if (indexOf > -1) {
+      const tempEmployees = [...employees]
+      tempEmployees[indexOf] = employee
+      setEmployees(tempEmployees)
+      return
     }
+    setEmployees([...employees, employee])
+  }
+
+  const handleEdit = (employee: Employee) => {
+    setSelectedEmployee(employee)
+    handleOpenForm()
   }
 
   const handleOpenForm = () => {
     setOpenFormModal(!openFormModal)
   }
 
-  const handleConfirmation = (index: number, id: string, name: string) => {
-    setSelectedId(id)
-    setName(name)
+  const handleConfirmation = (employee?: Employee) => {
+    setSelectedEmployee(employee)
     setOpenConfirmationModal(!openConfirmationModal)
   }
 
-  const handleDeletion = async () => {
-    setEmployeeLoading(true)
-    await deleteEmployee(selectedId!)
-    await findEmployees()
-    handleConfirmation(-1, '', '')
-    setEmployeeLoading(false)
+  const handleDeleted = (employee?: Employee) => {
+    const indexOf = findEmployeeIndexById(employee!)
+    employees.splice(indexOf, 1)
   }
+
+  useEffect(() => {
+    findEmployees()
+  }, [])
+
+  useEffect(() => {
+    setFilteredList(employees)
+  }, [employees])
 
   return (
     <div className="flex flex-col items-center gap-8 max-w-5xl mx-auto">
@@ -169,47 +99,29 @@ export const OrchestraConductorV2 = () => {
 
       <Loader showLoading={showLoading} />
 
-      <Filter
-        query={query}
-        city={city}
-        job={job}
-        jobs={jobs}
-        cities={cities}
-        setQuery={setQuery}
-        setCity={setCity}
-        setJob={setJob}
-        handleFilter={handleFilter}
-      />
+      <Filter handleFilter={handleFilter} setLoading={setFilterLoading} />
 
-      <AddEmployeeAction handleClearFields={handleClearFields} />
+      <AddEmployeeAction handleClearFields={handleOpenForm} />
 
       <EmployeeTable
         filteredList={filteredList}
-        handleConfirmation={handleConfirmation}
         handleEdit={handleEdit}
+        handleConfirmation={handleConfirmation}
       />
 
       <EmployForm
-        selectedId={selectedId}
         openFormModal={openFormModal}
         handleOpenForm={handleOpenForm}
-        name={name}
-        setName={setName}
-        cityField={cityField}
-        setCityField={setCityField}
-        jobField={jobField}
-        setJobField={setJobField}
-        birthday={birthday}
-        setBirthday={setBirthday}
-        jobs={jobs}
-        handleSubmit={handleSubmit}
+        onLoading={setFormLoading}
+        onUpdate={handleFormUpdate}
       />
 
       <DeleteConfirmationModal
         openConfirmationModal={openConfirmationModal}
         handleConfirmation={handleConfirmation}
-        name={name}
-        handleDeletion={handleDeletion}
+        selectedEmployee={selectedEmployee}
+        onLoading={setEmployeeLoading}
+        onDelete={handleDeleted}
       />
     </div>
   )
