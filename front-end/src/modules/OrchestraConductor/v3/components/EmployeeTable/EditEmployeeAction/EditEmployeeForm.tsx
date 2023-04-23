@@ -1,50 +1,50 @@
-import { Employee, addEmployee } from '@/modules/Shared/service/employeeService'
+import {
+  Employee,
+  updateEmployee,
+} from '@/modules/Shared/service/employeeService'
 import { Dispatch, SetStateAction } from 'react'
-import { INITIAL_EMPLOYEE } from '../../Shared/constants'
-import { EmployForm } from '../Shared/EmployeeForm'
-
-let counter = 0
+import { EmployForm } from '../../Shared/EmployeeForm'
 
 interface EmployFormProps {
+  selectedEmployee: Employee
   openFormModal: boolean
   handleOpenForm: () => void
   onLoading: Dispatch<SetStateAction<boolean>>
   onUpdate: (employee: Employee) => void
 }
 
-export const AddEmployeeForm = ({
+export const EditEmployeeForm = ({
+  selectedEmployee,
   onLoading,
   onUpdate,
   openFormModal,
   handleOpenForm,
 }: EmployFormProps) => {
   if (!openFormModal) return null
-  console.log('AddEmployForm counter', ++counter)
 
   const handleSubmit = async (employee: Employee) => {
-    console.log(employee)
     try {
       onLoading(true)
-      const newEmployee = await addEmployee({
+      const newEmployee = await updateEmployee(employee?.id!, {
         ...employee,
       })
       onUpdate(newEmployee)
     } catch (error) {
       console.error(error)
     } finally {
+      handleOpenForm()
       onLoading(false)
     }
   }
 
   return (
     <EmployForm
-      title="Add Employee"
-      initialEmployeeValues={INITIAL_EMPLOYEE}
+      title="Edit Employee"
+      initialEmployeeValues={selectedEmployee}
       handleOpenForm={handleOpenForm}
       onLoading={onLoading}
       openFormModal={openFormModal}
       onSubmit={handleSubmit}
-      clearForm
     />
   )
 }

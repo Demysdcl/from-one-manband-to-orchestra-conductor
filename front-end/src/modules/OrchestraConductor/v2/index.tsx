@@ -114,6 +114,7 @@ export const OrchestraConductorV2 = () => {
         handleOpenForm={handleOpenForm}
         onLoading={setFormLoading}
         onUpdate={handleFormUpdate}
+        initialEmployeeValues={selectedEmployee}
       />
 
       <DeleteConfirmationModal

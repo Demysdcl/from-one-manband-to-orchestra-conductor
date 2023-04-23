@@ -1,4 +1,4 @@
-import { OrchestraConductorV2 } from './modules/OrchestraConductor/v2'
+import { OrchestraConductorV3 } from './modules/OrchestraConductor/v3'
 
 function App() {
   return (
@@ -6,7 +6,8 @@ function App() {
       {/* <TodoList /> */}
       {/* <Bandman /> */}
       {/* <OrchestraConductorV1 /> */}
-      <OrchestraConductorV2 />
+      {/* <OrchestraConductorV2 /> */}
+      <OrchestraConductorV3 />
     </div>
   )
 }

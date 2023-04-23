@@ -80,7 +80,7 @@ export const EmployForm = ({
       job,
       birthday: parse(birthday, 'yyyy-MM-dd', new Date()).toISOString(),
     })
-    await onUpdate(newEmployee)
+    onUpdate(newEmployee)
   }
 
   const edit = async () => {
@@ -90,7 +90,7 @@ export const EmployForm = ({
       job,
       birthday: parse(birthday, 'yyyy-MM-dd', new Date()).toISOString(),
     })
-    await onUpdate(updatedEmployee)
+    onUpdate(updatedEmployee)
   }
 
   const handleSubmit = async (event: FormEvent) => {

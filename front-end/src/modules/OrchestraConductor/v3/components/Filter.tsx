@@ -1,5 +1,13 @@
 import { getCities, getJobs } from '@/modules/Shared/service/employeeService'
-import { ChangeEvent, useEffect, useReducer } from 'react'
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useReducer,
+} from 'react'
+import { FilterType } from '../Shared'
+import { genericReducer } from '../Shared/fuctions'
 
 let counter = 0
 
@@ -13,42 +21,27 @@ const initialSelectors: Selectors = {
   cities: [],
 }
 
-const selectorsReducer = (
-  state: Selectors,
-  partial: Partial<Selectors>,
-): Selectors => ({
-  ...state,
-  ...partial,
-})
-
 const initialFilter: FilterType = {
-  job: '',
-  city: '',
   query: '',
+  city: '',
+  job: '',
 }
-
-const filterReducer = (
-  state: FilterType,
-  partial: Partial<FilterType>,
-): FilterType => ({
-  ...state,
-  ...partial,
-})
 
 interface FilterProps {
   handleFilter: (filter: FilterType) => void
+  setLoading: Dispatch<SetStateAction<boolean>>
 }
 
-export const Filter = ({ handleFilter }: FilterProps) => {
+export const Filter = ({ handleFilter, setLoading }: FilterProps) => {
   console.log('Filter counter', ++counter)
 
   const [{ cities, jobs }, setSelectors] = useReducer(
-    selectorsReducer,
+    genericReducer<Selectors>,
     initialSelectors,
   )
 
   const [{ query, job, city }, setFilter] = useReducer(
-    filterReducer,
+    genericReducer<FilterType>,
     initialFilter,
   )
 
@@ -60,8 +53,10 @@ export const Filter = ({ handleFilter }: FilterProps) => {
     })
 
   const fillSelectors = async () => {
+    setLoading(true)
     const [cities, jobs] = await Promise.all([getCities(), getJobs()])
     setSelectors({ cities, jobs })
+    setLoading(false)
   }
 
   useEffect(() => {
