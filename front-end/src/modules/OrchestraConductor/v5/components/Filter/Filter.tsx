@@ -1,5 +1,10 @@
-import { useGenericReducer } from '@/modules/Shared'
-import { FilledButton } from '@/modules/Shared/components'
+import {
+  FilledButton,
+  Input,
+  Label,
+  Select,
+  useGenericReducer,
+} from '@/modules/Shared'
 import { ChangeEvent, memo } from 'react'
 import { FilterType, useCitiesStore, useJobsStore } from '../../Shared'
 import { useFilterStore } from './useFilterStore'
@@ -30,51 +35,34 @@ const Filter = () => {
 
   return (
     <section className="flex gap-4 w-full">
-      <label className="flex-1">
+      <Label className="flex-1">
         <span className="block font-bold">Name: </span>
-        <input
-          type="text"
-          value={query}
-          name="query"
-          onChange={handleChange}
-          placeholder="Enter your name"
-          className="w-full border border-gray-400 py-2 px-4 rounded-lg focus:outline-none focus:border-indigo-500"
-        />
-      </label>
+        <Input type="text" value={query} name="query" onChange={handleChange} />
+      </Label>
 
-      <label>
+      <Label>
         <span className="block font-bold">City: </span>
-        <select
-          value={city}
-          name="city"
-          onChange={handleChange}
-          className={`block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline-blue focus:border-indigo-500`}
-        >
+        <Select value={city} name="city" onChange={handleChange}>
           <option value={undefined}>All</option>
           {cities.map((city) => (
             <option className="block py-1" value={city} key={city}>
               {city}
             </option>
           ))}
-        </select>
-      </label>
+        </Select>
+      </Label>
 
-      <label>
+      <Label>
         <span className="block font-bold">Job: </span>
-        <select
-          value={job}
-          name="job"
-          onChange={handleChange}
-          className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline-blue focus:border-indigo-500"
-        >
+        <Select value={job} name="job" onChange={handleChange}>
           <option value={undefined}>All</option>
           {jobs.map((job) => (
             <option className="block py-1" value={job} key={job}>
               {job}
             </option>
           ))}
-        </select>
-      </label>
+        </Select>
+      </Label>
 
       <div className="flex self-end mb-1">
         <FilledButton onClick={() => setFilter({ query, city, job })}>

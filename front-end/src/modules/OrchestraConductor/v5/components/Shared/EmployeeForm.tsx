@@ -1,4 +1,10 @@
-import { useGenericReducer } from '@/modules/Shared'
+import {
+  FilledButton,
+  Input,
+  Label,
+  Select,
+  useGenericReducer,
+} from '@/modules/Shared'
 import { Employee } from '@/modules/Shared/service/employeeService'
 import { format, parse, parseISO } from 'date-fns'
 import { ChangeEvent, FormEvent, useEffect } from 'react'
@@ -79,71 +85,45 @@ export const EmployForm = ({
         <h1 className="mb-8 text-2xl font-bold">{title}</h1>
 
         <div className="mb-4">
-          <label className="block mb-2 font-bold text-gray-700" htmlFor="name">
+          <Label htmlFor="name">
             Name
-          </label>
-          <input
-            className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
-            type="text"
-            id="name"
-            value={name}
-            name="name"
-            onChange={handleChange}
-          />
+            <Input value={name} name="name" onChange={handleChange} />
+          </Label>
         </div>
+
         <div className="mb-4">
-          <label className="block mb-2 font-bold text-gray-700" htmlFor="city">
+          <Label htmlFor="city">
             City
-          </label>
-          <input
-            className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
-            type="text"
-            id="city"
-            value={city}
-            name="city"
-            onChange={handleChange}
-          />
+            <Input value={city} name="city" onChange={handleChange} />
+          </Label>
         </div>
+
         <div className="mb-4">
-          <label className="block mb-2 font-bold text-gray-700" htmlFor="job">
+          <Label htmlFor="job">
             Job
-          </label>
-          <select
-            value={job}
-            name="job"
-            onChange={handleChange}
-            className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline-blue focus:border-indigo-500"
-          >
-            <option value={undefined}>All</option>
-            {jobs.map((job) => (
-              <option className="block py-1" value={job} key={job}>
-                {job}
-              </option>
-            ))}
-          </select>
+            <Select value={job} name="job" onChange={handleChange}>
+              <option value={undefined}>All</option>
+              {jobs.map((job) => (
+                <option className="block py-1" value={job} key={job}>
+                  {job}
+                </option>
+              ))}
+            </Select>
+          </Label>
         </div>
+
         <div className="mb-4">
-          <label
-            className="block mb-2 font-bold text-gray-700"
-            htmlFor="birthday"
-          >
+          <Label htmlFor="birthday">
             Birthday
-          </label>
-          <input
-            className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
-            type="date"
-            id="birthday"
-            value={birthday}
-            name="birthday"
-            onChange={handleChange}
-          />
+            <Input
+              type="date"
+              value={birthday}
+              name="birthday"
+              onChange={handleChange}
+            />
+          </Label>
         </div>
-        <button
-          className="w-full px-3 py-2 text-white bg-indigo-500 rounded-lg hover:bg-indigo-700"
-          type="submit"
-        >
-          Submit
-        </button>
+        <FilledButton type="submit">Submit</FilledButton>
       </form>
     </section>
   )

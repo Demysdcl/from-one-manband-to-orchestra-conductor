@@ -1,2 +1,5 @@
+export { Input } from './Input'
+export { Label } from './Label'
 export * from './Loader'
+export { Select } from './Select'
 export * from './buttons'
