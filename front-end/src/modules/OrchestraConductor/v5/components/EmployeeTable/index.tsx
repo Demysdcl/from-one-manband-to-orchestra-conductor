@@ -4,6 +4,8 @@ import { useEmployeesStore } from '../../Shared/hooks/useEmployeesStore'
 import { useFilterStore } from '../Filter/useFilterStore'
 import { DeleteEmployee } from './DeleteEmployee'
 import { EditEmployee } from './EditEmployee'
+import { Td } from './Td'
+import { Th } from './Th'
 
 let counter = 0
 
@@ -30,23 +32,21 @@ const EmployeeTable = () => {
         <table className="table-auto border-collapse w-full">
           <thead>
             <tr>
-              <th className="border px-4 py-2">Name</th>
-              <th className="border px-4 py-2">Birthday</th>
-              <th className="border px-4 py-2">City</th>
-              <th className="border px-4 py-2">Job</th>
-              <th className="border px-4 py-2">Actions</th>
+              <Th>Name</Th>
+              <Th>Birthday</Th>
+              <Th>City</Th>
+              <Th>Job</Th>
+              <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
             {filteredList?.map(({ id, name, birthday, city, job }, index) => (
               <tr key={id}>
-                <td className="border px-4 py-2">{name}</td>
-                <td className="border px-4 py-2">
-                  {parseISO(birthday).toLocaleDateString('pt-br')}
-                </td>
-                <td className="border px-4 py-2">{city}</td>
-                <td className="border px-4 py-2">{job}</td>
-                <td className="border px-4 py-2 ">
+                <Td>{name}</Td>
+                <Td>{parseISO(birthday).toLocaleDateString('pt-br')}</Td>
+                <Td>{city}</Td>
+                <Td>{job}</Td>
+                <Td>
                   <div className="flex items-center justify-center gap-4">
                     <EditEmployee
                       selectedEmployee={{ id, name, birthday, city, job }}
@@ -55,7 +55,7 @@ const EmployeeTable = () => {
                       selectedEmployee={{ id, name, birthday, city, job }}
                     />
                   </div>
-                </td>
+                </Td>
               </tr>
             ))}
           </tbody>
