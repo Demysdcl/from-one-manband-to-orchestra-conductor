@@ -3,24 +3,20 @@ import {
   Employee,
   updateEmployee,
 } from '@/modules/Shared/service/employeeService'
-import { useEmployeesStore } from '../../hooks/useEmployeesStore'
-import { EmployForm } from '../Shared/EmployeeForm'
+import { useEmployeesStore } from '../../../Shared/hooks/useEmployeesStore'
+import { EmployForm } from '../../Shared/EmployeeForm'
 
 interface EmployFormProps {
   selectedEmployee: Employee
-  openFormModal: boolean
   onClose: () => void
 }
 
 export const EditEmployeeForm = ({
   selectedEmployee,
-  openFormModal,
   onClose,
 }: EmployFormProps) => {
   const { showLoader, hideLoader } = useLoaderStore()
   const { changeEmployee } = useEmployeesStore()
-
-  if (!openFormModal) return null
 
   const handleSubmit = async (employee: Employee) => {
     try {
@@ -42,8 +38,8 @@ export const EditEmployeeForm = ({
     <EmployForm
       title="Edit Employee"
       initialEmployeeValues={selectedEmployee}
-      handleOpenForm={onClose}
-      openFormModal={openFormModal}
+      onClose={onClose}
+      openFormModal={true}
       onSubmit={handleSubmit}
     />
   )

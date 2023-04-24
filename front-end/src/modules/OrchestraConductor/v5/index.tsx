@@ -3,14 +3,14 @@ import { useEffect } from 'react'
 import { useCitiesStore } from './Shared/hooks/useCitiesStore'
 import { useEmployeesStore } from './Shared/hooks/useEmployeesStore'
 import { useJobsStore } from './Shared/hooks/useJobsStore'
-import { AddEmployeeAction } from './components/AddEmployeeAction'
-import { EmployeeTable } from './components/EmployeeTable'
+import AddEmployeeAction from './components/AddEmployeeAction'
+import EmployeeTable from './components/EmployeeTable'
 import { Filter } from './components/Filter'
 
 let counter = 0
 
-export const OrchestraConductorV4 = () => {
-  console.log('OrchestraConductorV4 counter', ++counter)
+export const OrchestraConductorV5 = () => {
+  console.log('OrchestraConductorV5 counter', ++counter)
 
   const { fetchEmployees } = useEmployeesStore()
   const { fetchCities } = useCitiesStore()

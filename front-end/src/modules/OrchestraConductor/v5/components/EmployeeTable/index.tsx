@@ -1,4 +1,5 @@
 import { parseISO } from 'date-fns'
+import { memo } from 'react'
 import { useEmployeesStore } from '../../Shared/hooks/useEmployeesStore'
 import { useFilterStore } from '../Filter/useFilterStore'
 import { DeleteEmployee } from './DeleteEmployee'
@@ -6,7 +7,7 @@ import { EditEmployee } from './EditEmployee'
 
 let counter = 0
 
-export const EmployeeTable = () => {
+const EmployeeTable = () => {
   console.log('EmployeeTable counter', ++counter)
 
   const { employees } = useEmployeesStore()
@@ -63,3 +64,5 @@ export const EmployeeTable = () => {
     </>
   )
 }
+
+export default memo(EmployeeTable)

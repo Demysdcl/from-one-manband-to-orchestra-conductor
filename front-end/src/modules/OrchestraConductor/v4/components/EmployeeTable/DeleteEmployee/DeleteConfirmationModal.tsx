@@ -3,25 +3,21 @@ import {
   Employee,
   deleteEmployee,
 } from '@/modules/Shared/service/employeeService'
-import { useEmployeesStore } from '../../hooks/useEmployeesStore'
+import { useEmployeesStore } from '../../../Shared/hooks/useEmployeesStore'
 
 let counter = 0
 
 interface DeleteConfirmationModalProps {
-  openConfirmationModal: boolean
   onClose: (employee?: Employee) => void
   selectedEmployee: Employee
 }
 
 export const DeleteConfirmationModal = ({
-  openConfirmationModal,
   onClose,
   selectedEmployee,
 }: DeleteConfirmationModalProps) => {
   const { showLoader, hideLoader } = useLoaderStore()
   const { removeEmployee } = useEmployeesStore()
-
-  if (!openConfirmationModal) return null
 
   console.log('DeleteConfirmationModal counter', ++counter)
 

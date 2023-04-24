@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { AddEmployeeForm } from './AddEmployeeForm'
 
 let counter = 0
 
-export const AddEmployeeAction = () => {
+const AddEmployeeAction = () => {
   console.log('AddEmployeeAction counter', ++counter)
 
   const [openFormModal, setOpenFormModal] = useState(false)
@@ -28,3 +28,5 @@ export const AddEmployeeAction = () => {
     </>
   )
 }
+
+export default memo(AddEmployeeAction)
