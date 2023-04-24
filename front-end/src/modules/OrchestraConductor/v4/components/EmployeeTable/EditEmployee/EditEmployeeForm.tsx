@@ -3,7 +3,7 @@ import {
   Employee,
   updateEmployee,
 } from '@/modules/Shared/service/employeeService'
-import { useEmployeesStore } from '../../../Shared/hooks/useEmployeesStore'
+import { useEmployeesStore } from '../../../Shared'
 import { EmployForm } from '../../Shared/EmployeeForm'
 
 interface EmployFormProps {

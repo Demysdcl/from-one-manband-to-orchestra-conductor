@@ -3,7 +3,7 @@ import {
   Employee,
   deleteEmployee,
 } from '@/modules/Shared/service/employeeService'
-import { useEmployeesStore } from '../../../Shared/hooks/useEmployeesStore'
+import { useEmployeesStore } from '../../../Shared'
 
 let counter = 0
 

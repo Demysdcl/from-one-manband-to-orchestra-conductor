@@ -1,8 +1,8 @@
+import { useGenericReducer } from '@/modules/Shared'
 import { Employee } from '@/modules/Shared/service/employeeService'
 import { format, parse, parseISO } from 'date-fns'
-import { ChangeEvent, FormEvent, useEffect, useReducer } from 'react'
-import { INITIAL_EMPLOYEE, genericReducer } from '../../Shared'
-import { useJobsStore } from '../../Shared/hooks/useJobsStore'
+import { ChangeEvent, FormEvent, useEffect } from 'react'
+import { INITIAL_EMPLOYEE, useJobsStore } from '../../Shared'
 
 let counter = 0
 
@@ -29,10 +29,8 @@ export const EmployForm = ({
 
   const { jobs } = useJobsStore()
 
-  const [{ id, name, city, job, birthday }, setEmployee] = useReducer(
-    genericReducer<Employee>,
-    INITIAL_EMPLOYEE,
-  )
+  const [{ id, name, city, job, birthday }, setEmployee] =
+    useGenericReducer(INITIAL_EMPLOYEE)
 
   const formatDate = (date: string) =>
     date ? format(parseISO(date), 'yyyy-MM-dd') : ''

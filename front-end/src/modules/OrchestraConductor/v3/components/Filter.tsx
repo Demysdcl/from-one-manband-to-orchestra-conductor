@@ -1,13 +1,7 @@
+import { useGenericReducer } from '@/modules/Shared/hooks'
 import { getCities, getJobs } from '@/modules/Shared/service/employeeService'
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useReducer,
-} from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react'
 import { FilterType } from '../Shared'
-import { genericReducer } from '../Shared/fuctions'
 
 let counter = 0
 
@@ -35,15 +29,9 @@ interface FilterProps {
 export const Filter = ({ handleFilter, setLoading }: FilterProps) => {
   console.log('Filter counter', ++counter)
 
-  const [{ cities, jobs }, setSelectors] = useReducer(
-    genericReducer<Selectors>,
-    initialSelectors,
-  )
+  const [{ cities, jobs }, setSelectors] = useGenericReducer(initialSelectors)
 
-  const [{ query, job, city }, setFilter] = useReducer(
-    genericReducer<FilterType>,
-    initialFilter,
-  )
+  const [{ query, job, city }, setFilter] = useGenericReducer(initialFilter)
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,

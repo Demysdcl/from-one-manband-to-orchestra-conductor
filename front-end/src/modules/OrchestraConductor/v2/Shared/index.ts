@@ -1,2 +1,2 @@
-export * from './fuctions'
+export * from './constants'
 export * from './types'

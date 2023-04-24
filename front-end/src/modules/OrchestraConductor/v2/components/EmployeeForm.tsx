@@ -1,3 +1,4 @@
+import { useGenericReducer } from '@/modules/Shared/hooks'
 import {
   Employee,
   addEmployee,
@@ -11,10 +12,8 @@ import {
   FormEvent,
   SetStateAction,
   useEffect,
-  useReducer,
   useState,
 } from 'react'
-import { genericReducer } from '../Shared'
 import { INITIAL_EMPLOYEE } from '../Shared/constants'
 
 let counter = 0
@@ -40,10 +39,8 @@ export const EmployForm = ({
 
   const [jobs, setJobs] = useState<string[]>([])
 
-  const [{ name, city, job, birthday }, setEmployee] = useReducer(
-    genericReducer<Employee>,
-    INITIAL_EMPLOYEE,
-  )
+  const [{ name, city, job, birthday }, setEmployee] =
+    useGenericReducer(INITIAL_EMPLOYEE)
 
   const findJobs = async () => {
     onLoading(true)

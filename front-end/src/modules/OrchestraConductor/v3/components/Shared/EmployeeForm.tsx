@@ -1,3 +1,4 @@
+import { useGenericReducer } from '@/modules/Shared/hooks'
 import { Employee, getJobs } from '@/modules/Shared/service/employeeService'
 import { format, parse, parseISO } from 'date-fns'
 import {
@@ -6,10 +7,9 @@ import {
   FormEvent,
   SetStateAction,
   useEffect,
-  useReducer,
   useState,
 } from 'react'
-import { INITIAL_EMPLOYEE, genericReducer } from '../../Shared'
+import { INITIAL_EMPLOYEE } from '../../Shared'
 
 let counter = 0
 
@@ -38,10 +38,8 @@ export const EmployForm = ({
 
   const [jobs, setJobs] = useState<string[]>([])
 
-  const [{ id, name, city, job, birthday }, setEmployee] = useReducer(
-    genericReducer<Employee>,
-    INITIAL_EMPLOYEE,
-  )
+  const [{ id, name, city, job, birthday }, setEmployee] =
+    useGenericReducer(INITIAL_EMPLOYEE)
 
   const findJobs = async () => {
     onLoading(true)

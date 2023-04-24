@@ -1,7 +1,6 @@
 import { useLoaderStore } from '@/modules/Shared'
 import { Employee, addEmployee } from '@/modules/Shared/service/employeeService'
-import { INITIAL_EMPLOYEE } from '../../Shared/constants'
-import { useEmployeesStore } from '../../Shared/hooks/useEmployeesStore'
+import { INITIAL_EMPLOYEE, useEmployeesStore } from '../../Shared'
 import { EmployForm } from '../Shared/EmployeeForm'
 
 let counter = 0

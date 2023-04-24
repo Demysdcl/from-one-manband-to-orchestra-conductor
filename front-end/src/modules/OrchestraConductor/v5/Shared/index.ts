@@ -1,3 +1,3 @@
 export * from './constants'
-export * from './fuctions'
+export * from './hooks'
 export * from './types'

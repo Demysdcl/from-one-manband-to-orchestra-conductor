@@ -1,21 +1,9 @@
-import { ChangeEvent, useReducer } from 'react'
-import { FilterType } from '../../Shared'
-import { genericReducer } from '../../Shared/fuctions'
-import { useCitiesStore } from '../../Shared/hooks/useCitiesStore'
-import { useJobsStore } from '../../Shared/hooks/useJobsStore'
+import { useGenericReducer } from '@/modules/Shared/hooks'
+import { ChangeEvent } from 'react'
+import { FilterType, useCitiesStore, useJobsStore } from '../../Shared'
 import { useFilterStore } from './useFilterStore'
 
 let counter = 0
-
-type Selectors = {
-  jobs: string[]
-  cities: string[]
-}
-
-const initialSelectors: Selectors = {
-  jobs: [],
-  cities: [],
-}
 
 const initialFilter: FilterType = {
   query: '',
@@ -30,10 +18,7 @@ export const Filter = () => {
   const { jobs } = useJobsStore()
   const { setFilter } = useFilterStore()
 
-  const [{ query, job, city }, updateFilter] = useReducer(
-    genericReducer<FilterType>,
-    initialFilter,
-  )
+  const [{ query, job, city }, updateFilter] = useGenericReducer(initialFilter)
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
