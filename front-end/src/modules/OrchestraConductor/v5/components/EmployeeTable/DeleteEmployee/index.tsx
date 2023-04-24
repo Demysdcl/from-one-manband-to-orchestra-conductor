@@ -1,4 +1,5 @@
 import { Employee } from '@/modules/Shared'
+import { FilledButton } from '@/modules/Shared/components'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { DeleteConfirmationModal } from './DeleteConfirmationModal'
@@ -12,12 +13,9 @@ export const DeleteEmployee = ({ selectedEmployee }: DeleteEmployeeProps) => {
 
   return (
     <>
-      <button
-        onClick={() => setOpenConfirmationModal(true)}
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded"
-      >
+      <FilledButton onClick={() => setOpenConfirmationModal(true)} color="red">
         Delete
-      </button>
+      </FilledButton>
       {openConfirmationModal &&
         createPortal(
           <DeleteConfirmationModal

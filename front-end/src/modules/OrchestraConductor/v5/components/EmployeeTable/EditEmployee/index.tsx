@@ -1,4 +1,5 @@
 import { Employee } from '@/modules/Shared'
+import { FilledButton } from '@/modules/Shared/components'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { EditEmployeeForm } from './EditEmployeeForm'
@@ -12,12 +13,8 @@ export const EditEmployee = ({ selectedEmployee }: EditEmployeeProps) => {
 
   return (
     <>
-      <button
-        onClick={() => setOpenFormModal(true)}
-        className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-4 rounded"
-      >
-        Edit
-      </button>
+      <FilledButton onClick={() => setOpenFormModal(true)}>Edit</FilledButton>
+
       {openFormModal &&
         createPortal(
           <EditEmployeeForm

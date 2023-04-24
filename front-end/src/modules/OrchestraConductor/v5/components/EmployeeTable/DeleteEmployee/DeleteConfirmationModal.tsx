@@ -1,4 +1,4 @@
-import { useLoaderStore } from '@/modules/Shared'
+import { FilledButton, OutlineButton, useLoaderStore } from '@/modules/Shared'
 import {
   Employee,
   deleteEmployee,
@@ -48,19 +48,17 @@ export const DeleteConfirmationModal = ({
           ?
         </span>
 
-        <div className="flex gap-4 w-full">
-          <button
+        <div className="flex gap-4 w-full mt-8">
+          <OutlineButton
+            color="red"
             onClick={() => onClose()}
-            className="flex-1 border border-red-500 hover:border-red-700 hover:text-red-700 text-red-500 font-bold py-2 mt-8 px-4 rounded"
+            className="flex-1"
           >
             Close
-          </button>
-          <button
-            onClick={handleDeletion}
-            className="flex-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 mt-8 px-4 rounded"
-          >
+          </OutlineButton>
+          <FilledButton color="red" onClick={handleDeletion} className="flex-1">
             Delete
-          </button>
+          </FilledButton>
         </div>
       </div>
     </section>

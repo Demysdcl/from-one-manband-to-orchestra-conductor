@@ -1,5 +1,5 @@
 import { OrchestraConductorV5 } from './modules/OrchestraConductor/v5'
-import { Loader } from './modules/Shared/components/Loader'
+import { Loader } from './modules/Shared'
 
 let counter = 0
 

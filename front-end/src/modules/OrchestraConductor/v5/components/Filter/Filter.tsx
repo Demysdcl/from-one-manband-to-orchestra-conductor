@@ -1,4 +1,5 @@
 import { useGenericReducer } from '@/modules/Shared'
+import { FilledButton } from '@/modules/Shared/components'
 import { ChangeEvent, memo } from 'react'
 import { FilterType, useCitiesStore, useJobsStore } from '../../Shared'
 import { useFilterStore } from './useFilterStore'
@@ -76,12 +77,9 @@ const Filter = () => {
       </label>
 
       <div className="flex self-end mb-1">
-        <button
-          onClick={() => setFilter({ query, city, job })}
-          className="bg-indigo-500 hover:bg-indigo-700  text-white font-bold py-2 px-4 rounded"
-        >
+        <FilledButton onClick={() => setFilter({ query, city, job })}>
           Search
-        </button>
+        </FilledButton>
       </div>
     </section>
   )

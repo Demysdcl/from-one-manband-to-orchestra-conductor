@@ -1,3 +1,4 @@
+import { FilledButton } from '@/modules/Shared'
 import { memo, useState } from 'react'
 import { AddEmployeeForm } from './AddEmployeeForm'
 
@@ -12,12 +13,9 @@ const AddEmployeeAction = () => {
     <>
       <div className="flex justify-between items-center mb-1 w-full">
         <h2 className="text-xl font-bold">Employees List</h2>
-        <button
-          onClick={() => setOpenFormModal(!openFormModal)}
-          className="bg-indigo-500 hover:bg-indigo-700  text-white font-bold py-2 px-4 rounded"
-        >
+        <FilledButton onClick={() => setOpenFormModal(!openFormModal)}>
           Add new employee
-        </button>
+        </FilledButton>
       </div>
 
       {openFormModal && (
