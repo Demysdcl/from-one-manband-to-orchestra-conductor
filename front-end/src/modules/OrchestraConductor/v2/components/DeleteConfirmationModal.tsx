@@ -23,7 +23,7 @@ export const DeleteConfirmationModal = ({
 }: DeleteConfirmationModalProps) => {
   console.log('DeleteConfirmationModal counter', ++counter)
 
-  if (!openConfirmationModal) return null
+  if (!openConfirmationModal) return <></>
 
   const handleDeletion = async () => {
     onLoading(true)

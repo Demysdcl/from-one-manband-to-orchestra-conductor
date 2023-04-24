@@ -1,31 +1,35 @@
 import { Employee } from '@/modules/Shared/service/employeeService'
 import { parseISO } from 'date-fns'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { INITIAL_EMPLOYEE } from '../../Shared'
+import { useEmployeesStore } from '../../hooks/useEmployeesStore'
+import { useFilterStore } from '../Filter/useFilterStore'
 import { DeleteConfirmationModal } from './DeleteConfirmationModal'
 import { EditEmployeeForm } from './EditEmployeeForm'
 
 let counter = 0
 
-interface EmployeeTableProps {
-  filteredList: Employee[]
-  onLoading: Dispatch<SetStateAction<boolean>>
-  onUpdate: (employee: Employee) => void
-  onDeleted: (employee: Employee) => void
-}
-
-export const EmployeeTable = ({
-  filteredList,
-  onLoading,
-  onUpdate,
-  onDeleted,
-}: EmployeeTableProps) => {
+export const EmployeeTable = () => {
   console.log('EmployeeTable counter', ++counter)
 
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
   const [openFormModal, setOpenFormModal] = useState(false)
   const [selectedEmployee, setSelectedEmployee] =
     useState<Employee>(INITIAL_EMPLOYEE)
+
+  const { employees } = useEmployeesStore()
+  const { filter } = useFilterStore()
+  const { query, job, city } = filter
+
+  const filteredList = employees.filter((item) => {
+    const isNameMatched = item.name
+      .trim()
+      .toLowerCase()
+      .includes(query.toLowerCase())
+    const isCityMatched = !city || city === 'All' || item.city === city
+    const isJobMatched = !job || job === 'All' || item.job === job
+    return isNameMatched && isCityMatched && isJobMatched
+  })
 
   const handleConfirmation = (employee: Employee) => {
     setOpenConfirmationModal(!openConfirmationModal)
@@ -87,8 +91,6 @@ export const EmployeeTable = ({
 
       <EditEmployeeForm
         onClose={() => setOpenFormModal(false)}
-        onLoading={onLoading}
-        onUpdate={onUpdate}
         openFormModal={openFormModal}
         selectedEmployee={selectedEmployee}
       />
@@ -97,8 +99,6 @@ export const EmployeeTable = ({
         openConfirmationModal={openConfirmationModal}
         onClose={() => setOpenConfirmationModal(false)}
         selectedEmployee={selectedEmployee}
-        onLoading={onLoading}
-        onDeleted={onDeleted}
       />
     </>
   )

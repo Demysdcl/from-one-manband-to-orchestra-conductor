@@ -1,68 +1,47 @@
-import {
-  Employee,
-  addEmployee,
-  getJobs,
-  updateEmployee,
-} from '@/modules/Shared/service/employeeService'
+import { Employee } from '@/modules/Shared/service/employeeService'
 import { format, parse, parseISO } from 'date-fns'
-import {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react'
-import { genericReducer } from '../Shared'
-import { INITIAL_EMPLOYEE } from '../Shared/constants'
+import { ChangeEvent, FormEvent, useEffect, useReducer } from 'react'
+import { INITIAL_EMPLOYEE, genericReducer } from '../../Shared'
+import { useJobsStore } from '../../hooks/useJobsStore'
 
 let counter = 0
 
 interface EmployFormProps {
+  title: string
   openFormModal: boolean
   handleOpenForm: () => void
   initialEmployeeValues?: Employee
-  onLoading: Dispatch<SetStateAction<boolean>>
-  onUpdate: (employee: Employee) => void
+  onSubmit: (employee: Employee) => Promise<void>
+  clearForm?: boolean
 }
 
 export const EmployForm = ({
+  title,
   openFormModal,
   handleOpenForm,
   initialEmployeeValues,
-  onLoading,
-  onUpdate,
+  onSubmit,
+  clearForm = false,
 }: EmployFormProps) => {
-  console.log('EmployForm counter', ++counter)
-
   if (!openFormModal) return <></>
 
-  const [jobs, setJobs] = useState<string[]>([])
+  console.log('EmployForm counter', ++counter)
 
-  const [{ name, city, job, birthday }, setEmployee] = useReducer(
+  const { jobs } = useJobsStore()
+
+  const [{ id, name, city, job, birthday }, setEmployee] = useReducer(
     genericReducer<Employee>,
     INITIAL_EMPLOYEE,
   )
 
-  const findJobs = async () => {
-    onLoading(true)
-    setJobs(await getJobs())
-    onLoading(false)
-  }
-
-  useEffect(() => {
-    findJobs()
-  }, [])
+  const formatDate = (date: string) =>
+    date ? format(parseISO(date), 'yyyy-MM-dd') : ''
 
   useEffect(() => {
     if (initialEmployeeValues)
       setEmployee({
         ...initialEmployeeValues,
-        birthday: format(
-          parseISO(initialEmployeeValues.birthday),
-          'yyyy-MM-dd',
-        ),
+        birthday: formatDate(initialEmployeeValues.birthday),
       })
   }, [initialEmployeeValues])
 
@@ -73,37 +52,16 @@ export const EmployForm = ({
       [event.target.name]: event.target.value,
     })
 
-  const save = async () => {
-    const newEmployee = await addEmployee({
-      name,
-      city,
-      job,
-      birthday: parse(birthday, 'yyyy-MM-dd', new Date()).toISOString(),
-    })
-    onUpdate(newEmployee)
-  }
-
-  const edit = async () => {
-    const updatedEmployee = await updateEmployee(initialEmployeeValues?.id!, {
-      name,
-      city,
-      job,
-      birthday: parse(birthday, 'yyyy-MM-dd', new Date()).toISOString(),
-    })
-    onUpdate(updatedEmployee)
-  }
-
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    try {
-      onLoading(true)
-      if (initialEmployeeValues?.id) edit()
-      else save()
-    } catch (error) {
-      console.error(error)
-    } finally {
-      onLoading(false)
-    }
+    await onSubmit({
+      id,
+      name,
+      city,
+      job,
+      birthday: parse(birthday, 'yyyy-MM-dd', new Date()).toISOString(),
+    })
+    if (clearForm) setEmployee(INITIAL_EMPLOYEE)
   }
 
   return (
@@ -119,9 +77,7 @@ export const EmployForm = ({
           ❌
         </span>
 
-        <h1 className="mb-8 text-2xl font-bold">
-          {initialEmployeeValues ? 'Edit' : 'Add'} Employee
-        </h1>
+        <h1 className="mb-8 text-2xl font-bold">{title}</h1>
 
         <div className="mb-4">
           <label className="block mb-2 font-bold text-gray-700" htmlFor="name">

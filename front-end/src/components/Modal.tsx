@@ -12,7 +12,7 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
 
   const count = useStore(({ state }) => state.count)
 
-  if (!isOpen) return null
+  if (!isOpen) return <></>
 
   return (
     <>

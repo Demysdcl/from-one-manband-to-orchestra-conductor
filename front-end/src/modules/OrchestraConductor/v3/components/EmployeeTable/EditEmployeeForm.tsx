@@ -3,12 +3,12 @@ import {
   updateEmployee,
 } from '@/modules/Shared/service/employeeService'
 import { Dispatch, SetStateAction } from 'react'
-import { EmployForm } from '../../Shared/EmployeeForm'
+import { EmployForm } from '../Shared/EmployeeForm'
 
 interface EmployFormProps {
   selectedEmployee: Employee
   openFormModal: boolean
-  handleOpenForm: () => void
+  onClose: () => void
   onLoading: Dispatch<SetStateAction<boolean>>
   onUpdate: (employee: Employee) => void
 }
@@ -18,9 +18,9 @@ export const EditEmployeeForm = ({
   onLoading,
   onUpdate,
   openFormModal,
-  handleOpenForm,
+  onClose,
 }: EmployFormProps) => {
-  if (!openFormModal) return null
+  if (!openFormModal) return <></>
 
   const handleSubmit = async (employee: Employee) => {
     try {
@@ -32,7 +32,7 @@ export const EditEmployeeForm = ({
     } catch (error) {
       console.error(error)
     } finally {
-      handleOpenForm()
+      onClose()
       onLoading(false)
     }
   }
@@ -41,7 +41,7 @@ export const EditEmployeeForm = ({
     <EmployForm
       title="Edit Employee"
       initialEmployeeValues={selectedEmployee}
-      handleOpenForm={handleOpenForm}
+      handleOpenForm={onClose}
       onLoading={onLoading}
       openFormModal={openFormModal}
       onSubmit={handleSubmit}

@@ -35,7 +35,7 @@ export const EmployForm = ({
 }: EmployFormProps) => {
   console.log('EmployForm counter', ++counter)
 
-  if (!openFormModal) return null
+  if (!openFormModal) return <></>
 
   return (
     <section className="z-10 top-0 fixed w-full h-full bg-black bg-opacity-50">

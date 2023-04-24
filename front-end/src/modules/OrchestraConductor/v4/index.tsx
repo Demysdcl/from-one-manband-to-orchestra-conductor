@@ -1,0 +1,41 @@
+import { useLoaderStore } from '@/modules/Shared'
+import { useEffect } from 'react'
+import { AddEmployeeAction } from './components/AddEmployeeAction'
+import { EmployeeTable } from './components/EmployeeTable'
+import { Filter } from './components/Filter'
+import { useCitiesStore } from './hooks/useCitiesStore'
+import { useEmployeesStore } from './hooks/useEmployeesStore'
+import { useJobsStore } from './hooks/useJobsStore'
+
+let counter = 0
+
+export const OrchestraConductorV4 = () => {
+  console.log('OrchestraConductorV4 counter', ++counter)
+
+  const { fetchEmployees } = useEmployeesStore()
+  const { fetchCities } = useCitiesStore()
+  const { fetchJobs } = useJobsStore()
+  const { showLoader, hideLoader } = useLoaderStore()
+
+  const fetchRequests = async () => {
+    showLoader()
+    await Promise.all([fetchEmployees(), fetchCities(), fetchJobs()])
+    hideLoader()
+  }
+
+  useEffect(() => {
+    fetchRequests()
+  }, [])
+
+  return (
+    <div className="flex flex-col items-center gap-8 max-w-5xl mx-auto">
+      <h1 className="text-3xl font-semibold">Employees manager</h1>
+
+      <Filter />
+
+      <AddEmployeeAction />
+
+      <EmployeeTable />
+    </div>
+  )
+}

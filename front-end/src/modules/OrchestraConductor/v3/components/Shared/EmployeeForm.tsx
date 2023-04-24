@@ -32,7 +32,7 @@ export const EmployForm = ({
   onSubmit,
   clearForm = false,
 }: EmployFormProps) => {
-  if (!openFormModal) return null
+  if (!openFormModal) return <></>
 
   console.log('EmployForm counter', ++counter)
 
