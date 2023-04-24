@@ -12,8 +12,8 @@ import { FormEvent, useEffect, useState } from 'react'
 
 let counter = 0
 
-export const Bandman = () => {
-  console.log('Bandman counter', ++counter)
+export const OneManBand = () => {
+  console.log('OneManBand counter', ++counter)
 
   const [employeeloading, setEmployeeLoading] = useState(false)
   const [jobsloading, setJobsLoading] = useState(false)

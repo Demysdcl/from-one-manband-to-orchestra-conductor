@@ -9,7 +9,7 @@ interface InputProps {
 
 export const Input = ({ value, name, onChange, type }: InputProps) => (
   <input
-    className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
+    className="w-full appearance-none  bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline-blue focus:border-indigo-500"
     type={type}
     id={name}
     value={value}
