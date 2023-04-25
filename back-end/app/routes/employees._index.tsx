@@ -7,6 +7,7 @@ import { corsHeader } from "~/utils";
 export async function loader() {
   return json(await getEmployees(), corsHeader);
 }
+
 export async function action({ request }: ActionArgs) {
   const formData = await request.json();
   const newEmployee = await saveEmployee(formData);

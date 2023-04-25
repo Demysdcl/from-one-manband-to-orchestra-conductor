@@ -4,20 +4,22 @@ import { Todo } from './types'
 
 let counter = 0
 
+const initialTodos: Todo[] = [
+  { text: 'Complete React project', completed: false },
+  { text: 'Read a chapter of a book', completed: false },
+  { text: 'Go for a walk', completed: false },
+  { text: 'Cook dinner', completed: true },
+  { text: 'Buy groceries', completed: true },
+  { text: 'Do laundry', completed: true },
+  { text: 'Schedule a dentist appointment', completed: false },
+  { text: 'Call a friend', completed: false },
+  { text: 'Watch a movie', completed: false },
+  { text: 'Learn a new skill', completed: false },
+]
+
 export function TodoList() {
   console.log('TodoList counter', ++counter)
-  const [todos, setTodos] = useState<Todo[]>([
-    { text: 'Complete React project', completed: false },
-    { text: 'Read a chapter of a book', completed: false },
-    { text: 'Go for a walk', completed: false },
-    { text: 'Cook dinner', completed: true },
-    { text: 'Buy groceries', completed: true },
-    { text: 'Do laundry', completed: true },
-    { text: 'Schedule a dentist appointment', completed: false },
-    { text: 'Call a friend', completed: false },
-    { text: 'Watch a movie', completed: false },
-    { text: 'Learn a new skill', completed: false },
-  ])
+  const [todos, setTodos] = useState<Todo[]>(initialTodos)
   const [newTodo, setNewTodo] = useState<string>('')
 
   const title = { text: 'TODO List manager' }

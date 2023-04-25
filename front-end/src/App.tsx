@@ -1,5 +1,4 @@
 import { OrchestraConductorV5 } from './modules/OrchestraConductor/v5'
-import { Loader } from './modules/Shared'
 
 let counter = 0
 
@@ -16,7 +15,7 @@ function App() {
         {/* <OrchestraConductorV4 /> */}
         <OrchestraConductorV5 />
       </div>
-      <Loader />
+      {/* <Loader /> */}
     </>
   )
 }

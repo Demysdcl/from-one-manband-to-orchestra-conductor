@@ -1,7 +1,5 @@
 import { ReactNode } from 'react'
 
-let counter = 0
-
 interface LabelProps {
   children: ReactNode
   htmlFor?: string
