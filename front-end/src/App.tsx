@@ -1,4 +1,4 @@
-import { OrchestraConductorV5 } from './modules/OrchestraConductor/v5'
+import { TodoList } from './modules/memoization'
 
 let counter = 0
 
@@ -7,13 +7,13 @@ function App() {
   return (
     <>
       <div className="p-20">
-        {/* <TodoList /> */}
+        <TodoList />
         {/* <OneManBand /> */}
         {/* <OrchestraConductorV1 /> */}
         {/* <OrchestraConductorV2 /> */}
         {/* <OrchestraConductorV3 /> */}
         {/* <OrchestraConductorV4 /> */}
-        <OrchestraConductorV5 />
+        {/* <OrchestraConductorV5 /> */}
       </div>
       {/* <Loader /> */}
     </>
