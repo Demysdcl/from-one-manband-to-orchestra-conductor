@@ -26,7 +26,9 @@ export const TabContainer = ({ tabs }: TabContainerProps) => {
               }`}
               onClick={() => setActiveTab(index)}
             >
-              {tab.name}
+              <span className={`${activeTab === index && 'underline'}`}>
+                {tab.name}
+              </span>
             </div>
           ))}
         </div>
