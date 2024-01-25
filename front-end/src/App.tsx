@@ -12,6 +12,7 @@ import { OrchestraConductorV5 } from './modules/OrchestraConductor/5-Memo-DRY'
 import { MemoDRYCode } from './modules/OrchestraConductor/5-Memo-DRY/Code'
 import { Loader } from './modules/Shared'
 import { TabContainer, TabItem } from './modules/Shared/components/TabContainer'
+import { Componentization } from './modules/componentization'
 import { TodoList } from './modules/memoization'
 import { Example } from './modules/memoization/examples/Example'
 import { Example1 } from './modules/memoization/examples/Example1'
@@ -97,6 +98,12 @@ const tabs: TabItem[] = [
           { name: 'Code', content: <MemoDRYCode /> },
         ]}
       />
+    ),
+  },
+  {
+    name: 'Componentization',
+    content: (
+      <TabContainer tabs={[{ name: 'Page', content: <Componentization /> }]} />
     ),
   },
 ]

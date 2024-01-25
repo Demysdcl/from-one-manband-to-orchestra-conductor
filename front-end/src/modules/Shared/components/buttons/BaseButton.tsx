@@ -1,3 +1,4 @@
+import { cd } from '../../utils'
 import { BaseButtonProps } from './types'
 
 export const BaseButton = ({
@@ -10,7 +11,7 @@ export const BaseButton = ({
     <button
       type={type}
       onClick={onClick}
-      className={`font-bold py-2 px-4 rounded ${className}`}
+      className={cd('font-bold py-2 px-4 rounded', className)}
     >
       {children}
     </button>

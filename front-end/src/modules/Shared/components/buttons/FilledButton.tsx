@@ -1,3 +1,4 @@
+import { cd } from '../../utils'
 import { BaseButton } from './BaseButton'
 import { BaseButtonProps } from './types'
 
@@ -12,7 +13,7 @@ export const FilledButton = ({
   return (
     <BaseButton
       onClick={onClick}
-      className={`text-white ${styling} ${className}`}
+      className={cd(`text-white`, styling, className)}
     >
       {children}
     </BaseButton>
